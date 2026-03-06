@@ -19,6 +19,7 @@ dist/
 *.ipr
 *.iws
 *.log
+*.yaml
 target/
 build/
 out/
