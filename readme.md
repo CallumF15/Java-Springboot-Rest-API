@@ -36,10 +36,10 @@ PostgresSQL will be required to setup with local user/password as well as creati
 1. Clone the repository.
 2. Navigate to the backend folder.
 3. Configure PostgreSQL connection in or `application.yml`
-4. Modify these settings to your PostgreSQL login details with your database with task fields
+4. Modify these settings to your PostgreSQL login details with your database with task fields (or configure the .env file)
 	DB_NAME=taskdb
-	DB_USER_NAME=postgres
-	DB_PASSWORD=taskpass
+	DB_USER_NAME=yourusername
+	DB_PASSWORD=yourpassword
 5. Make sure to define Poolname too. 
 6. Make sure Load / sync the Gradle
 
