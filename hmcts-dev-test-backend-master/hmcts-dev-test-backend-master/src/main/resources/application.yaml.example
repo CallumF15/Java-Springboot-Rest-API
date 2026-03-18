@@ -1,3 +1,5 @@
+# this is just a temp file for purposes of github only
+
 spring:
   config:
     import: optional:file:.env[.properties]
@@ -48,6 +50,6 @@ management:
         include: info # should we have more?
 
 springdoc:
-  packagesToScan: uk.gov.hmcts.reform.dev.controllers
+  packagesToScan: com.company.business.controllers
   writer-with-order-by-keys: true
 
