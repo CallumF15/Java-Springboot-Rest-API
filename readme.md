@@ -1,9 +1,10 @@
-# Task Management Application
+# Business Management Application
 
-A simple task management application with a Spring Boot backend, Node.js/Express frontend, and PostgreSQL database. Supports creating, viewing, and validating tasks, with API documentation and error handling included.
+A business management application with a Spring Boot backend and a PostgreSQL database. Supports creating, viewing, and validating businesses, with API documentation (to be expanded).
 
 ## Features
 
+#task will be removed
 - Create tasks with title, description, status, and due date.
 - View all tasks.
 - Validation for required fields (title, status).
@@ -11,12 +12,17 @@ A simple task management application with a Spring Boot backend, Node.js/Express
 - API documentation using OpenAPI/Swagger annotations.
 - Frontend interface for task creation and listing.
 
+#Business
+- Create new businesses with title, description... (to be expanded)
+- View all businesses
+- More to be added
+
 ---
 
 ## Tech Stack
 
 **Backend:** Java, Spring Boot, Spring Data JPA, Hibernate Validator  
-**Frontend:** Node.js, Express, Nunjucks, Axios  
+**Frontend:** Nunjucks, Axios  (will change to something else)
 **Database:** PostgreSQL  
 **Testing:** JUnit, RestAssured  
 **API Documentation:** OpenAPI / Swagger  
@@ -33,47 +39,34 @@ PostgresSQL will be required to setup with local user/password as well as creati
 
 ### Backend
 
+note: .ENV file not working just now
+
 1. Clone the repository.
 2. Navigate to the backend folder.
 3. Configure PostgreSQL connection in or `application.yml`
 4. Modify these settings to your PostgreSQL login details with your database with task fields (or configure the .env file)
-	DB_NAME=taskdb
+	DB_NAME=databaseName
 	DB_USER_NAME=yourusername
 	DB_PASSWORD=yourpassword
 5. Make sure to define Poolname too. 
 6. Make sure Load / sync the Gradle
 
-
 ### PostgreSQL Database
 
 1. Ensure PostgreSQL is installed.
 2. Create database and user or use your existing credentials.
-3. Use the SQL below to create the `tasks` table:
-
-```sql
-CREATE TABLE public.tasks (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(200) NOT NULL,
-    description VARCHAR(2000),
-    status VARCHAR(20) NOT NULL, -- values: TODO, PENDING, COMPLETED
-    due_date TIMESTAMP,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
+3. Database tables should be generated automatically
 
 ### FrontEnd
 
 1) Navigate to Terminal
 2) Ensure the directory is correct. Use CD to ensure you are in hmcts-dev-test-frontend-master
 3) Install dependencies.
-4) Ensure backend is running first before running frontend
-5) Use command ‘npm run start:dev’ to run the frontend project
 
-Routes included
+Routes included (additional routes coming)
 1) ‘list-tasks’  –  see a list of all tasks
 2)  ‘tasks’ – lets you create a new task
  
-	
 ### Running Tests
 
 The backend includes functional tests to verify API endpoints.
