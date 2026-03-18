@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class CountryDTO {
     private Long id;       // country ID
-    private String name;   // human-readable name
-    private String code;   // optional ISO code
+    private String name;
+
+    //private String code;   // optional ISO code
 }

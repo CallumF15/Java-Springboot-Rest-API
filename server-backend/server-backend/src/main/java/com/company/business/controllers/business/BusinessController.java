@@ -27,40 +27,29 @@ import java.util.List;
 @RequestMapping("/api/business") //will change this later
 public class BusinessController {
 
-    @Autowired
-    private final BusinessService service;
+    private final BusinessService businessService;
 
-    @Autowired
     private final BusinessRepository businessRepository;
-    @Autowired
     private final SectorRepository sectorRepository;
-    @Autowired
     private final IndustryRepository industryRepository;
 
-    @Autowired
-    public BusinessController(BusinessService service,
-                              BusinessRepository businessRepository,
-                              SectorRepository sectorRepository,
-                              IndustryRepository industryRepository) {
-        this.service = service;
+    public BusinessController(BusinessService service, BusinessRepository businessRepository, SectorRepository sectorRepository, IndustryRepository industryRepository) {
+        this.businessService = service;
         this.businessRepository = businessRepository;
         this.sectorRepository = sectorRepository;
         this.industryRepository = industryRepository;
     }
 
-
-
     @GetMapping("/sectors")
     public List<Sector> getAllSectors() {
-        return service.getAllSectors();
+        return businessService.getAllSectors();
     }
 
     @GetMapping("industries/{sectorId}")
     public List<Industry> getIndustriesBySector(@PathVariable Long sectorId) {
-        return service.getIndustriesBySectorId(sectorId);
+        return businessService.getIndustriesBySectorId(sectorId);
     }
-
-
+    
     @Operation(
         summary = "Create a new business",
         description = "Creates a new business with attributes",
@@ -85,6 +74,11 @@ public class BusinessController {
         Business saved = businessRepository.save(business);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    }
+
+    @GetMapping("all")
+    public List<Business> getAll() {
+        return businessService.getAllBusinesses();
     }
 
     private Business mapDtoToBusiness(Business dto, Sector sector, Industry industry) {

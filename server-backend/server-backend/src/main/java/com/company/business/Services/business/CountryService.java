@@ -1,10 +1,12 @@
 package com.company.business.Services.business;
 
+import com.company.business.dto.Business.response.CountryResponseDTO;
 import org.springframework.stereotype.Service;
 import com.company.business.models.country.Country;
 import com.company.business.repositories.business.CountryRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CountryService {
@@ -24,8 +26,11 @@ public class CountryService {
     }
 
     //Get all countries
-    public List<Country> getAllCountries() {
-        return countryRepository.findAll();
+    public List<CountryResponseDTO> getAllCountries() {
+        return countryRepository.findAll()
+            .stream()
+            .map(c -> new CountryResponseDTO(c.getName())) // <-- closing parenthesis here
+            .collect(Collectors.toList());
     }
 
     // Optional: validate if country exists for some business rule
