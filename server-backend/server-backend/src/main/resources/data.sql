@@ -17,3 +17,4 @@ INSERT INTO industry (id, name, sector_id) VALUES (6, 'Pharmaceuticals', 3);
 -- Optional example business
 INSERT INTO business (id, name, industry_id) VALUES (1, 'TechCorp', 1);
 INSERT INTO business (id, name, industry_id) VALUES (2, 'BankOfWorld', 3);
+

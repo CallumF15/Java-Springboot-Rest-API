@@ -8,4 +8,12 @@ import lombok.Getter;
 public class CountryResponseDTO {
 
     private String name;
+    private String code;
+
+    // Constructor 1: just name
+    public CountryResponseDTO(String name) {
+        this.name = name;
+    }
+
+    // Constructor 2: Lombok makes
 }

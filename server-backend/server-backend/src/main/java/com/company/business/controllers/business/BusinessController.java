@@ -49,14 +49,14 @@ public class BusinessController {
     public List<Industry> getIndustriesBySector(@PathVariable Long sectorId) {
         return businessService.getIndustriesBySectorId(sectorId);
     }
-    
+
     @Operation(
         summary = "Create a new business",
         description = "Creates a new business with attributes",
         responses = {
             @ApiResponse(responseCode = "201", description = "business successfully created",
                 content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Task.class))),
+                    schema = @Schema(implementation = Business.class))),
             @ApiResponse(responseCode = "400", description = "Validation failed")
         }
     )
