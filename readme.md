@@ -4,20 +4,12 @@ A business management application with a Spring Boot backend and a PostgreSQL da
 
 ## Features
 
-#task will be removed
-- Create tasks with title, description, status, and due date.
-- View all tasks.
+- Create a Business with title, description, sector, industry and more.
+- View all businesses. 
 - Validation for required fields (title, status).
 - Global exception handling for proper error responses.
 - API documentation using OpenAPI/Swagger annotations.
-- Frontend interface for task creation and listing.
-
-#Business
-- Create new businesses with title, description... (to be expanded)
-- View all businesses
-- More to be added
-
----
+- More to be added.
 
 ## Tech Stack
 
