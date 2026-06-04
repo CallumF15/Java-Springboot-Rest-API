@@ -43,14 +43,14 @@ public class BusinessService {
     public Business createBusiness(BusinessRequestDTO dto) {
 
         // 🔍 1. Get country
-    Long countryID = dto.getAddress().getCountryID();
+        Long countryID = dto.getAddress().countryId();
 
-       Country country = countryRepository.findById(countryID)
-        .orElseThrow(() -> new RuntimeException("Country not found"));
+        Country country = countryRepository.findById(countryID)
+            .orElseThrow(() -> new RuntimeException("Country not found"));
 
         // 🏗 2. Build address
         Address address = new Address();
-        address.setStreet(dto.getAddress().getStreet());
+        address.setStreet(dto.getAddress().street());
         address.setCountry(country);
 
         // 🏢 3. Build business

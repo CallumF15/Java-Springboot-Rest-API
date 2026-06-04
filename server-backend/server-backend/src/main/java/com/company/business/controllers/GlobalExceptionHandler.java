@@ -1,6 +1,6 @@
 package com.company.business.controllers;
 
-import com.company.business.exceptions.CountryNotFoundException;
+import com.company.business.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -35,8 +35,8 @@ public class GlobalExceptionHandler {
             .body(errorMessage);
     }
 
-    @ExceptionHandler(CountryNotFoundException.class)
-    public ResponseEntity<String> handleNotFound(CountryNotFoundException ex) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<String> handleNotFound(ResourceNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
             .body(ex.getMessage());
     }

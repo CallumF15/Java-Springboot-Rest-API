@@ -39,6 +39,8 @@ public class Address {
     @Size(max = 20)
     private String postcode;
 
+    // One Country -> Many Addresses
+    // Many Addresses -> One Country
     @ManyToOne
     private Country country;
 }

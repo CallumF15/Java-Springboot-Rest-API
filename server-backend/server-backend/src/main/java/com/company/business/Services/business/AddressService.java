@@ -1,63 +1,59 @@
 package com.company.business.Services.business;
 
+import com.company.business.Mappers.AddressMapper;
+import com.company.business.dto.Business.response.AddressResponseDTO;
+import com.company.business.dto.Business.response.CountryResponseDTO;
+import com.company.business.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.company.business.repositories.business.AddressRepository;
 
 import com.company.business.dto.Business.request.AddressRequestDTO;
 import com.company.business.models.business.Address;
-import com.company.business.models.country.Country;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AddressService {
 
+
     private final CountryService countryService;
     private final AddressRepository addressRepository;
 
+    private final AddressMapper addressMapper;
+
     // Inject CountryService to resolve countryId → Country entity
-    public AddressService(CountryService countryService, AddressRepository addressRepository) {
+    public AddressService(CountryService countryService, AddressRepository addressRepository, AddressMapper addressMapper) {
         this.countryService = countryService;
         this.addressRepository = addressRepository;
+        this.addressMapper = addressMapper;
     }
 
-    // Map AddressDTO from client to Address entity for saving
-    public Address mapDtoToAddress(AddressRequestDTO dto) {
-        if (dto == null) {
-            return null; // handle optional address
-        }
-
-        // Fetch Country entity using the ID provided in DTO
-        Country country = countryService.getById(dto.getCountryID());
-
-        Address address = new Address();
-        address.setStreet(dto.getStreet());
-        address.setCity(dto.getCity());
-        address.setCounty(dto.getCounty());
-        address.setPostcode(dto.getPostcode());
-        address.setCountry(country);
-
-        return address;
+    public AddressResponseDTO createAddress(AddressRequestDTO dto) {
+        Address address = addressMapper.toEntity(dto);
+        Address saved = addressRepository.save(address);
+        return addressMapper.toResponse(saved);
     }
+
 
     // Map Address entity to AddressDTO for sending back to client
-    public AddressRequestDTO mapAddressToDto(Address address) {
-        if (address == null) {
-            return null;
-        }
-
-        AddressRequestDTO dto = new AddressRequestDTO();
-        dto.setStreet(address.getStreet());
-        dto.setCity(address.getCity());
-        dto.setCounty(address.getCounty());
-        dto.setPostcode(address.getPostcode());
-        dto.setCountryID(address.getCountry().getId());
-
-        return dto;
+    public AddressResponseDTO ToDto(Address address) {
+        return addressMapper.toResponse(address);
     }
 
-    public Address getAddressById(Long id) {
+    public AddressResponseDTO getAddressById(Long id) {
+        return addressRepository.findById(id)
+            .map(c -> new AddressResponseDTO(c.getId(), c.getStreet(), c.getCity(), c.getCounty(), c.getPostcode(), c.getCountry().getId()))
+            .orElseThrow(() -> new ResourceNotFoundException(id, "address"));
+    }
 
-        return addressRepository.findById(id).orElse(null);
+
+    public List<AddressResponseDTO> getAllAddresses() {
+        return addressRepository.findAll()
+            .stream()
+            .map(c -> new AddressResponseDTO(c.getId(), c.getStreet(), c.getCity(), c.getCounty(), c.getPostcode(), c.getCountry().getId()))
+            .collect(Collectors.toList());
     }
 
     public Address getAddressByPostcode(String postcode) {

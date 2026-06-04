@@ -1,13 +1,10 @@
 package com.company.business.Services.business;
 
 import com.company.business.dto.Business.response.CountryResponseDTO;
-import com.company.business.exceptions.CountryNotFoundException;
+import com.company.business.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import com.company.business.models.country.Country;
 import com.company.business.repositories.business.CountryRepository;
-import com.company.business.exceptions.CountryNotFoundException;
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +29,7 @@ public class CountryService {
     public CountryResponseDTO getCountryById(Long id) {
         return countryRepository.findById(id)
             .map(c -> new CountryResponseDTO(c.getId(), c.getName(), c.getCode()))
-            .orElseThrow(() -> new CountryNotFoundException(id));
+            .orElseThrow(() -> new ResourceNotFoundException(id, "country"));
     }
 
     public List<CountryResponseDTO> getAllCountries() {

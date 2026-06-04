@@ -18,3 +18,11 @@ INSERT INTO industry (id, name, sector_id) VALUES (6, 'Pharmaceuticals', 3);
 INSERT INTO business (id, name, industry_id) VALUES (1, 'TechCorp', 1);
 INSERT INTO business (id, name, industry_id) VALUES (2, 'BankOfWorld', 3);
 
+SELECT table_schema, table_name
+FROM information_schema.tables
+WHERE table_type = 'BASE TABLE'
+ORDER BY table_schema, table_name;
+
+SELECT current_database();
+
+SELECT table_name FROM information_schema.tables WHERE table_schema='public';
