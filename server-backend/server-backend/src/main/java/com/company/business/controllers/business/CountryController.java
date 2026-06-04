@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,22 +27,22 @@ public class CountryController {
     }
 
     @Operation(
-        summary = "Get all countries",
-        description = "Returns a list of countries with names",
+        summary = "Get all countries in the country table and display their id, name, code",
+        description = "Returns a list of countries with id, names and codes",
         responses = {
-            @ApiResponse(responseCode = "200", description = "List of country objects",
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved all countries",
                 content = @Content(mediaType = "application/json",
                     array = @ArraySchema(schema = @Schema(implementation = CountryResponseDTO.class)))),
             @ApiResponse(responseCode = "400", description = "Validation failed")
         }
     )
-    @GetMapping("/NameByDto")
-    public List<CountryResponseDTO> getCountries() {
-        return countryService.getAllCountriesNames();
+    @GetMapping("/All")
+    public ResponseEntity<List<CountryResponseDTO>> getAllCountries() {
+        return ResponseEntity.ok(countryService.getAllCountries());
     }
 
     @Operation(
-        summary = "Get all Countries Names By String",
+        summary = "Get all Countries Names by String",
         description = "Returns a list of all country names as strings",
         responses = {
             @ApiResponse(responseCode = "200", description = "List of country names retrieved",
@@ -50,8 +51,8 @@ public class CountryController {
             @ApiResponse(responseCode = "400", description = "Validation failed")
         }
     )
-    @GetMapping("/NamebyString")
-    public List<String> getCountryNames() { return countryService.getAllCountryNamesAsStrings(); }
+    @GetMapping("/Names")
+    public List<String> getAllCountryNames() { return countryService.getAllCountryNames(); }
 
     @Operation(
         summary = "Get all Countries Codes By String",
@@ -63,15 +64,16 @@ public class CountryController {
             @ApiResponse(responseCode = "400", description = "Validation failed")
         }
     )
-    public List<String> getCountryCodes() { return countryService.getAllCountryCodesAsStrings(); }
+    @GetMapping("/Codes")
+    public List<String> getCountryCodes() { return countryService.getAllCountryCodes(); }
 
     @Operation(
-        summary = "Get Country by ID",
+        summary = "Get a Country by its ID",
         description = "Returns a single country with its name and code by ID",
         responses = {
             @ApiResponse(
                 responseCode = "200",
-                description = "Country found",
+                description = "Country has been found",
                 content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = CountryResponseDTO.class))
             ),

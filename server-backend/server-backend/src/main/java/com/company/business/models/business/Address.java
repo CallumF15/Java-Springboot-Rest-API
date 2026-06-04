@@ -1,7 +1,6 @@
 package com.company.business.models.business;
 
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -11,12 +10,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import com.company.business.models.country.Country;
 
-@Embeddable
+
+@Entity
+@Table(name = "Address", schema = "public") // <-- make sure this matches your PostgreSQL table name
 @NoArgsConstructor //gens constructor no args
 @AllArgsConstructor //gens contructor with 1 arg for every field in class
 @Getter
 @Setter
 public class Address {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotBlank(message = "Street is required")
     @Size(max = 200)

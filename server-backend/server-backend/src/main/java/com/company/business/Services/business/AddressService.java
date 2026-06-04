@@ -1,7 +1,10 @@
 package com.company.business.Services.business;
 
 import org.springframework.stereotype.Service;
-import com.company.business.dto.Business.request.AddressDTO;
+
+import com.company.business.repositories.business.AddressRepository;
+
+import com.company.business.dto.Business.request.AddressRequestDTO;
 import com.company.business.models.business.Address;
 import com.company.business.models.country.Country;
 
@@ -9,14 +12,16 @@ import com.company.business.models.country.Country;
 public class AddressService {
 
     private final CountryService countryService;
+    private final AddressRepository addressRepository;
 
     // Inject CountryService to resolve countryId → Country entity
-    public AddressService(CountryService countryService) {
+    public AddressService(CountryService countryService, AddressRepository addressRepository) {
         this.countryService = countryService;
+        this.addressRepository = addressRepository;
     }
 
     // Map AddressDTO from client to Address entity for saving
-    public Address mapDtoToAddress(AddressDTO dto) {
+    public Address mapDtoToAddress(AddressRequestDTO dto) {
         if (dto == null) {
             return null; // handle optional address
         }
@@ -35,12 +40,12 @@ public class AddressService {
     }
 
     // Map Address entity to AddressDTO for sending back to client
-    public AddressDTO mapAddressToDto(Address address) {
+    public AddressRequestDTO mapAddressToDto(Address address) {
         if (address == null) {
             return null;
         }
 
-        AddressDTO dto = new AddressDTO();
+        AddressRequestDTO dto = new AddressRequestDTO();
         dto.setStreet(address.getStreet());
         dto.setCity(address.getCity());
         dto.setCounty(address.getCounty());
@@ -48,5 +53,17 @@ public class AddressService {
         dto.setCountryID(address.getCountry().getId());
 
         return dto;
+    }
+
+    public Address getAddressById(Long id) {
+
+        return addressRepository.findById(id).orElse(null);
+    }
+
+    public Address getAddressByPostcode(String postcode) {
+        // Implement logic to retrieve address by postcode
+        // This might involve calling a repository method to find the address
+
+        return null; // Placeholder return statement
     }
 }

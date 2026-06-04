@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.URL;
 
 @Getter
 @Setter
-public class BusinessDTO {
+public class BusinessRequestDTO {
 
     @NotBlank
     @Size(max = 200)
@@ -40,7 +40,7 @@ public class BusinessDTO {
     @Size(max = 20)
     private String phoneNumber;
 
-    private AddressDTO address; // DTO for address
+    private AddressRequestDTO address; // DTO for address
 
     @URL
     @Size(max = 500)

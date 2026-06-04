@@ -1,16 +1,26 @@
 package com.company.business.Services.business;
 
-import com.company.business.models.business.Business;
-import com.company.business.repositories.business.BusinessRepository;
-import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+//dto
+import com.company.business.dto.Business.request.BusinessRequestDTO;
+
+
+//models
+import com.company.business.models.business.Address;
+import com.company.business.models.business.Business;
 import com.company.business.models.business.Industry;
 import com.company.business.models.business.Sector;
+import com.company.business.models.country.Country;
+import com.company.business.repositories.business.BusinessRepository;
+import com.company.business.repositories.business.CountryRepository;
 import com.company.business.repositories.business.IndustryRepository;
 import com.company.business.repositories.business.SectorRepository;
 
-import java.util.List;
+import jakarta.persistence.EntityNotFoundException;
 
 //Service layer: contains the logic to get data, combine it, validate, etc.
 
@@ -20,12 +30,35 @@ public class BusinessService {
     private final SectorRepository sectorRespository;
     private final IndustryRepository industryRepository;
     private final BusinessRepository businessRepository;
+    private final CountryRepository countryRepository;
 
     @Autowired
-    public BusinessService(BusinessRepository businessRepository, SectorRepository sectorRespository, IndustryRepository industryRepository) {
+    public BusinessService(BusinessRepository businessRepository, SectorRepository sectorRespository, IndustryRepository industryRepository, CountryRepository countryRepository) {
         this.businessRepository = businessRepository;
         this.sectorRespository = sectorRespository;
         this.industryRepository = industryRepository;
+        this.countryRepository = countryRepository;
+    }
+
+    public Business createBusiness(BusinessRequestDTO dto) {
+
+        // 🔍 1. Get country
+    Long countryID = dto.getAddress().getCountryID();
+
+       Country country = countryRepository.findById(countryID)
+        .orElseThrow(() -> new RuntimeException("Country not found"));
+
+        // 🏗 2. Build address
+        Address address = new Address();
+        address.setStreet(dto.getAddress().getStreet());
+        address.setCountry(country);
+
+        // 🏢 3. Build business
+        Business business = new Business();
+        business.setTitle(dto.getTitle());
+        business.setAddress(address);
+
+        return businessRepository.save(business);
     }
 
     //fetch all business

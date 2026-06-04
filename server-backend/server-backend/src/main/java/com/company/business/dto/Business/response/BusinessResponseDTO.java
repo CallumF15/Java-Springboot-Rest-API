@@ -1,34 +1,28 @@
 package com.company.business.dto.Business.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import com.company.business.dto.Business.request.IndustryDTO;
-import com.company.business.dto.Business.request.SectorDTO;
+import com.company.business.dto.Business.request.IndustryRequestDTO;
+import com.company.business.dto.Business.request.SectorRequestDTO;
 import java.time.LocalDateTime;
 
 ///note: Only include what the client needs to display, read, or use.
 
-@Getter
-@Setter
-@AllArgsConstructor
-public class BusinessResponseDTO {
-    private String title;
-    private String description;
+public record BusinessResponseDTO(
+    String title,
+     String description,
 
-    private SectorDTO sector;
-    private IndustryDTO industry;
+     SectorRequestDTO sector,
+     IndustryRequestDTO industry,
 
-    private String email;
-    private String landlineNumber;
-    private String phoneNumber;
+     String email,
+     String landlineNumber,
+     String phoneNumber,
 
-    private AddressResponseDTO address;
+     AddressResponseDTO address,
 
-    private String website;
-    private String logoUrl;
-    private Boolean isActive;
+     String website,
+     String logoUrl,
+     Boolean isActive,
 
-    private LocalDateTime createdAt;  // safe to show
-    private LocalDateTime updatedAt;  // safe to show
-}
+     LocalDateTime createdAt,  // safe to show
+     LocalDateTime updatedAt  // safe to show
+){}

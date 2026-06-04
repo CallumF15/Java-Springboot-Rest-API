@@ -1,9 +1,11 @@
 package com.company.business.Services.business;
 
 import com.company.business.dto.Business.response.CountryResponseDTO;
+import com.company.business.exceptions.CountryNotFoundException;
 import org.springframework.stereotype.Service;
 import com.company.business.models.country.Country;
 import com.company.business.repositories.business.CountryRepository;
+import com.company.business.exceptions.CountryNotFoundException;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 
@@ -29,41 +31,30 @@ public class CountryService {
     // Fetch a Country entity by ID, throw exception if not found
     public CountryResponseDTO getCountryById(Long id) {
         return countryRepository.findById(id)
-            .map(c -> new CountryResponseDTO(c.getName(), c.getCode()))
-            .orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "Country not found with id: " + id
-            ));
+            .map(c -> new CountryResponseDTO(c.getId(), c.getName(), c.getCode()))
+            .orElseThrow(() -> new CountryNotFoundException(id));
     }
 
-    public List<CountryResponseDTO> getAllCountriesNames() {
+    public List<CountryResponseDTO> getAllCountries() {
         return countryRepository.findAll()
             .stream()
-            .map(c -> new CountryResponseDTO(c.getName()))
+            .map(c -> new CountryResponseDTO(c.getId(), c.getName(), c.getCode()))
             .collect(Collectors.toList());
     }
 
-    public List<String> getAllCountryNamesAsStrings() {
+    public List<String> getAllCountryNames() {
         return countryRepository.findAll()
             .stream()
             .map(Country::getName)
             .collect(Collectors.toList());
     }
 
-    public List<CountryResponseDTO> getAllCountryCodes() {
-        return countryRepository.findAll()
-            .stream()
-            .map(c -> new CountryResponseDTO(c.getCode()))
-            .collect(Collectors.toList());
-    }
-
-    public List<String> getAllCountryCodesAsStrings() {
+    public List<String> getAllCountryCodes() {
         return countryRepository.findAll()
             .stream()
             .map(Country::getCode)
             .collect(Collectors.toList());
     }
-
-
 
     // Optional: validate if country exists for some business rule
     public boolean existsById(Long id) {

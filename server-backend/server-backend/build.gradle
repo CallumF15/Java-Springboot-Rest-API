@@ -5,8 +5,6 @@ plugins {
   id 'org.springframework.boot' version '3.5.7'
   id 'com.github.ben-manes.versions' version '0.53.0'
   id 'org.sonarqube' version '7.0.1.6134'
-  // Applies analysis tools including checkstyle and OWASP Dependency checker.
-  id 'uk.gov.hmcts.java' version '0.12.67'
 }
 
 group = 'uk.gov.hmcts.reform'
@@ -129,11 +127,6 @@ dependencyUpdates {
   rejectVersionIf { selection -> // <---- notice how the closure argument is named
     return isNonStable(selection.candidate.version) && !isNonStable(selection.currentVersion)
   }
-}
-
-// https://jeremylong.github.io/DependencyCheck/dependency-check-gradle/configuration.html
-dependencyCheck {
-  suppressionFile = 'config/owasp/suppressions.xml'
 }
 
 repositories {

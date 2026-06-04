@@ -1,13 +1,13 @@
 package com.company.business.dto.Business.request;
 
+
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class CountryDTO {
-    private Long id;       // country ID
+@NoArgsConstructor
+public class SectorRequestDTO {
     private String name;
-
-    //private String code;   // optional ISO code
 }

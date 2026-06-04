@@ -22,6 +22,6 @@ public class AddressController {
 
     @GetMapping("/countries")
     public List<String> getAllCountries() {
-        return countryService.getAllCountryNamesAsStrings();
+        return countryService.getAllCountryNames();
     }
 }

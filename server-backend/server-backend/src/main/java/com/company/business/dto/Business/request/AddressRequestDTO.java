@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AddressDTO {
+public class AddressRequestDTO {
 
     @NotBlank(message = "Street is required")
     @Size(max = 200)

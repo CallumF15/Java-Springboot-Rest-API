@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.URL;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "businesses", schema = "public") // <-- make sure this matches your PostgreSQL table name
+@Table(name = "Businesses", schema = "public") // <-- make sure this matches your PostgreSQL table name
 @NoArgsConstructor //gens constructor no args
 @AllArgsConstructor //gens constructor with 1 arg for every field in class
 @Getter
@@ -61,7 +61,8 @@ public class Business {
     @Column(nullable = true)
     private String phoneNumber;
 
-    @Embedded //there isn't a separate table pulls fields from class tidying code here a little
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
     private Address address;
 
     @URL(message = "Website must be a valid URL") //validates the url
