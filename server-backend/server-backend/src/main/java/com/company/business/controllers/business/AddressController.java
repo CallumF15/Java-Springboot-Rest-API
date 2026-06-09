@@ -1,18 +1,14 @@
 package com.company.business.controllers.business;
 
 import com.company.business.Services.business.AddressService;
-import com.company.business.Services.business.CountryService;
 import com.company.business.dto.Business.request.AddressRequestDTO;
 import com.company.business.dto.Business.response.AddressResponseDTO;
-import com.company.business.dto.Business.response.CountryResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

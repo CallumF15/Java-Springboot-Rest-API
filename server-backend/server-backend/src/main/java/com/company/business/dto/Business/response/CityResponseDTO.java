@@ -1,4 +1,4 @@
-﻿package com.company.business.dto.Business.response;
+package com.company.business.dto.Business.response;
 
 public record CityResponseDTO(
     Long id,

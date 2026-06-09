@@ -22,7 +22,6 @@ public class Country {
     @Column(nullable = false, unique = true)
     private String name;
 
-
     @Column(length = 2, nullable = false, unique = true)
     private String code;
 

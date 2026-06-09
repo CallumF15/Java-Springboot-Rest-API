@@ -4,7 +4,7 @@ import com.company.business.dto.Business.response.CountryResponseDTO;
 import com.company.business.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import com.company.business.models.country.Country;
-import com.company.business.repositories.business.CountryRepository;
+import com.company.business.repositories.Location.CountryRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

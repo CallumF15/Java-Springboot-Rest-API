@@ -1,4 +1,4 @@
-﻿package com.company.business.dto.Business.request;
+package com.company.business.dto.Business.request;
 
 import jakarta.persistence.Entity;
 

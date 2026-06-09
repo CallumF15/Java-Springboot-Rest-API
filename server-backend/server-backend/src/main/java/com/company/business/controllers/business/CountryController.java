@@ -77,7 +77,10 @@ public class CountryController {
                 content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = CountryResponseDTO.class))
             ),
-            @ApiResponse(responseCode = "404", description = "Country not found")
+            @ApiResponse(responseCode = "404", description = "Country not found"),
+            @ApiResponse(responseCode = "400", description = "Invalid country ID supplied"),
+            @ApiResponse(responseCode = "500", description = "Unexpected server error")
+
         }
     )
     @GetMapping("/{id}")

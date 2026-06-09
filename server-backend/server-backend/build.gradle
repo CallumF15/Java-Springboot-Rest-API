@@ -171,9 +171,12 @@ dependencies {
   implementation group: 'org.projectlombok', name: 'lombok'
   annotationProcessor 'org.projectlombok:lombok'
 
-  testImplementation(platform('org.junit:junit-bom:6.0.1'))
+  test {
+    useJUnitPlatform()
+  }
+
   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-  testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', {
+  testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test') {
     exclude group: 'junit', module: 'junit'
     exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
   }

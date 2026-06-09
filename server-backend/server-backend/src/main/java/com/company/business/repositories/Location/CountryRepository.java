@@ -1,4 +1,4 @@
-package com.company.business.repositories.business;
+package com.company.business.repositories.Location;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

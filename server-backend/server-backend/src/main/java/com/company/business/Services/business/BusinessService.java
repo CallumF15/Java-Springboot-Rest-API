@@ -16,7 +16,7 @@ import com.company.business.models.business.Industry;
 import com.company.business.models.business.Sector;
 import com.company.business.models.country.Country;
 import com.company.business.repositories.business.BusinessRepository;
-import com.company.business.repositories.business.CountryRepository;
+import com.company.business.repositories.Location.CountryRepository;
 import com.company.business.repositories.business.IndustryRepository;
 import com.company.business.repositories.business.SectorRepository;
 
@@ -43,19 +43,19 @@ public class BusinessService {
     public Business createBusiness(BusinessRequestDTO dto) {
 
         // 🔍 1. Get country
-        Long countryID = dto.getAddress().countryId();
+        Long countryID = dto.address().countryId();
 
         Country country = countryRepository.findById(countryID)
             .orElseThrow(() -> new RuntimeException("Country not found"));
 
         // 🏗 2. Build address
         Address address = new Address();
-        address.setStreet(dto.getAddress().street());
+        address.setStreet(dto.address().street());
         address.setCountry(country);
 
         // 🏢 3. Build business
         Business business = new Business();
-        business.setTitle(dto.getTitle());
+        business.setTitle(dto.title());
         business.setAddress(address);
 
         return businessRepository.save(business);
