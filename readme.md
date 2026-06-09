@@ -1,15 +1,18 @@
 # Business Management Application
 
-A business management application with a Spring Boot backend and a PostgreSQL database. Supports creating, viewing, and validating businesses, with API documentation (to be expanded).
+Business Management Application
+
+A full-stack business management application built with Spring Boot and PostgreSQL. The application allows users to create, manage, and view business records through a REST API and web interface.
 
 ## Features
 
-- Create a Business with title, description, sector, industry and more.
-- View all businesses. 
-- Validation for required fields (title, status).
-- Global exception handling for proper error responses.
-- API documentation using OpenAPI/Swagger annotations.
-- More to be added.
+- Create and manage business records
+- View all registered businesses
+- Server-side validation for required fields
+- Global exception handling with structured error responses
+- REST API built with Spring Boot
+- PostgreSQL database integration
+- Functional API testing with JUnit and RestAssured
 
 ## Tech Stack
 
@@ -21,39 +24,38 @@ A business management application with a Spring Boot backend and a PostgreSQL da
 
 ---
 
-## Setup
+### Backend setup
 
-Repository contains both frontend and backend.
 
-Open backend with Java
-Open Frontend with Visual Studio Code
-PostgresSQL will be required to setup with local user/password as well as creating database table task (will include create statement below)
-
-### Backend
-
-note: .ENV file not working just now
-
-1. Clone the repository.
-2. Navigate to the backend folder.
-3. Configure PostgreSQL connection in or `application.yml`
-4. Modify these settings to your PostgreSQL login details with your database with task fields (or configure the .env file)
-	DB_NAME=databaseName
-	DB_USER_NAME=yourusername
-	DB_PASSWORD=yourpassword
-5. Make sure to define Poolname too. 
-6. Make sure Load / sync the Gradle
+1. Clone the repository:
+2. git clone <repository-url>
+3. cd backend
+4. Configure your database connection in application.yml:
+5. spring:
+  	datasource:
+   	 url: jdbc:postgresql://localhost:5432/your_database
+    	username: your_username
+    	password: your_password
+6. Create the PostgreSQL database.
+7. Build the project:
+8. ./gradlew build
+9. Run the application:
+	./gradlew bootRun
 
 ### PostgreSQL Database
 
-1. Ensure PostgreSQL is installed.
-2. Create database and user or use your existing credentials.
-3. Database tables should be generated automatically
+1. Install PostgreSQL.
+2. Create a database.
+3. Update database credentials in application.yml.
+4. Start the application.
 
-### FrontEnd
+Database tables will be generated automatically through JPA/Hibernate.
 
-1) Navigate to Terminal
-2) Ensure the directory is correct. Use CD to ensure you are in hmcts-dev-test-frontend-master
-3) Install dependencies.
+### FrontEnd  (will change)
+
+1. cd frontend 
+2. npm install
+3. npm start
 
 Routes included (additional routes coming)
 1) ‘list-tasks’  –  see a list of all tasks
@@ -61,11 +63,23 @@ Routes included (additional routes coming)
  
 ### Running Tests
 
-The backend includes functional tests to verify API endpoints.
+Run functional tests using Gradle:
 
-1. Navigate to the backend project folder.
-2. Run the functional tests either via accessing Gradle and clicking the run icon text to functional or via command
+1. ./gradlew functional
 
-```bash
-./gradlew functional
-```
+2. Or run all tests:
+ 	./gradlew test
+
+API Documentation
+
+### Swagger/OpenAPI documentation is available when the application is running.
+
+Example:
+
+http://localhost:8080/swagger-ui.html
+
+### Status
+
+🚧 Active Development
+
+This project is currently being expanded with additional business management features and frontend improvements.
