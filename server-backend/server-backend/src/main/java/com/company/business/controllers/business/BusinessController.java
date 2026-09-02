@@ -1,5 +1,13 @@
 package com.company.business.controllers.business;
 
+import com.company.business.Mappers.AddressMapper;
+import com.company.business.Mappers.AddressMapperImpl;
+import com.company.business.dto.Business.request.BusinessRequestDTO;
+import com.company.business.dto.Business.request.IndustryRequestDTO;
+import com.company.business.dto.Business.request.SectorRequestDTO;
+import com.company.business.dto.Business.response.BusinessResponseDTO;
+import com.company.business.models.business.Address;
+import com.company.business.repositories.business.AddressRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,6 +28,7 @@ import com.company.business.models.business.Sector;
 import com.company.business.repositories.business.BusinessRepository;
 import com.company.business.repositories.business.IndustryRepository;
 import com.company.business.repositories.business.SectorRepository;
+import com.company.business.repositories.business.AddressRepository;
 
 import java.util.List;
 
@@ -29,15 +38,10 @@ public class BusinessController {
 
     private final BusinessService businessService;
 
-    private final BusinessRepository businessRepository;
-    private final SectorRepository sectorRepository;
-    private final IndustryRepository industryRepository;
 
-    public BusinessController(BusinessService service, BusinessRepository businessRepository, SectorRepository sectorRepository, IndustryRepository industryRepository) {
+    public BusinessController(BusinessService service)
+    {
         this.businessService = service;
-        this.businessRepository = businessRepository;
-        this.sectorRepository = sectorRepository;
-        this.industryRepository = industryRepository;
     }
 
     @GetMapping("/sectors")
@@ -61,19 +65,11 @@ public class BusinessController {
         }
     )
     @PostMapping
-    public ResponseEntity<Business> createBusiness(@Valid @RequestBody Business dto) {
-        // fetch sector and industry by IDs
-        Sector sector = sectorRepository.findById(dto.getSector().getId()).orElseThrow(() -> new RuntimeException("Sector not found"));
-        Industry industry = industryRepository.findById(dto.getIndustry().getId()).orElseThrow(() -> new RuntimeException("Industry not found"));
+    public ResponseEntity<BusinessResponseDTO> createBusiness(@Valid @RequestBody BusinessRequestDTO dto) {
 
-        //above returns null just now (fix)
+        BusinessResponseDTO business = businessService.createBusiness(dto);
 
-        Business business = mapDtoToBusiness(dto, sector, industry);
-
-        // save to DB
-        Business saved = businessRepository.save(business);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+        return ResponseEntity.status(HttpStatus.CREATED).body(business);
     }
 
     @GetMapping("all")
@@ -81,20 +77,5 @@ public class BusinessController {
         return businessService.getAllBusinesses();
     }
 
-    private Business mapDtoToBusiness(Business dto, Sector sector, Industry industry) {
-        Business business = new Business();
-        business.setTitle(dto.getTitle());
-        business.setDescription(dto.getDescription());
-        business.setSector(sector);
-        business.setIndustry(industry);
-        business.setEmail(dto.getEmail());
-        business.setLandlineNumber(dto.getLandlineNumber());
-        business.setPhoneNumber(dto.getPhoneNumber());
-        business.setAddress(dto.getAddress());
-        business.setWebsite(dto.getWebsite());
-        business.setLogoUrl(dto.getLogoUrl());
-        business.setIsActive(dto.getIsActive());
 
-        return business;
-    }
 }

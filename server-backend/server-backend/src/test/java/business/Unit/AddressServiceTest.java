@@ -38,9 +38,6 @@ public class AddressServiceTest{
     @InjectMocks
     private AddressService addressService;
 
-    @Mock
-    private CountryService countryService;
-
     AddressRequestDTO request;
 
     @BeforeEach

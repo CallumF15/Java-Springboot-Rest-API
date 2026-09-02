@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 @Service
 public class AddressService {
 
-
     private final AddressRepository addressRepository;
 
     private final AddressMapper addressMapper;
@@ -54,13 +53,15 @@ public class AddressService {
         return addressMapper.toResponse(address);
     }
 
-    public AddressResponseDTO getAddressById(Long id) {
+    public AddressResponseDTO getAddressById(Long id)
+    {
         return addressRepository.findById(id)
             .map(addressMapper::toResponse)
             .orElseThrow(() -> new ResourceNotFoundException(id, "Address"));
     }
 
-    public List<AddressResponseDTO> getAllAddresses() {
+    public List<AddressResponseDTO> getAllAddresses()
+    {
         return addressRepository.findAll()
             .stream() //turns the list into a stream so we can process each item
             .map(addressMapper::toResponse) //converts EACH Address entity into an AddressResponseDTO
@@ -68,9 +69,10 @@ public class AddressService {
     }
 
 
-    public Address getAddressByPostcode(String postcode) {
+    public Address getAddressByPostcode(String postcode)
+    {
         // Implement logic to retrieve address by postcode
-        // This might involve calling a repository method to find the address
+
 
         return null; // Placeholder return statement
     }

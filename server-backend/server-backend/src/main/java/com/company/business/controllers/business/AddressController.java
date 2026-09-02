@@ -3,11 +3,13 @@ package com.company.business.controllers.business;
 import com.company.business.Services.business.AddressService;
 import com.company.business.dto.Business.request.AddressRequestDTO;
 import com.company.business.dto.Business.response.AddressResponseDTO;
+import com.company.business.dto.Business.response.BusinessResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,17 +21,13 @@ public class AddressController {
 
     private final AddressService addressService;
 
-//    public AddressController(AddressService addressService, CountryService countryService) {
-//        this.addressService = addressService;
-//        this.countryService = countryService;
-//    }
-
-    public AddressController(AddressService addressService) {
+    public AddressController(AddressService addressService)
+    {
         this.addressService = addressService;
     }
 
     @Operation(
-        summary = "Add new Address",
+        summary = "Add a new Address",
         description = "Creates a new address and returns the created address",
         responses = {
             @ApiResponse(
@@ -44,8 +42,11 @@ public class AddressController {
         }
     )
     @PostMapping("/create")
-    public AddressResponseDTO createAddress(@RequestBody AddressRequestDTO dto) {
-        return addressService.createAddress(dto);
+    public ResponseEntity<AddressResponseDTO> createAddress(@RequestBody AddressRequestDTO dto)
+    {
+        AddressResponseDTO business = addressService.createAddress(dto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(business);
     }
 
 

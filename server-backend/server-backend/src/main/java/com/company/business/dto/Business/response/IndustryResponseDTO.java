@@ -1,12 +1,9 @@
 package com.company.business.dto.Business.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.company.business.dto.Business.summary.SectorSummaryDTO;
 
 public record IndustryResponseDTO(
     Long id,
     String name,
-    Long sectorId,
-    String sectorName
-
+    SectorSummaryDTO sector
 ){}

@@ -36,14 +36,4 @@ public class Sector {
     @OneToMany(mappedBy = "sector") // "sector" refers to the field in Industry
     @JsonManagedReference
     private List<Industry> industries = new ArrayList<>();
-
-//    public void addIndustry(Industry industry) {
-//        industries.add(industry);
-//        industry.setSector(this);
-//    }
-//
-//    public void removeIndustry(Industry industry) {
-//        industries.remove(industry);
-//        industry.setSector(null);
-//    }
 }

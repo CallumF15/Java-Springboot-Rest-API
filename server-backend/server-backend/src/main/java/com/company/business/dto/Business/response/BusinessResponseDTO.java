@@ -1,17 +1,18 @@
 package com.company.business.dto.Business.response;
 
-import com.company.business.dto.Business.request.IndustryRequestDTO;
-import com.company.business.dto.Business.request.SectorRequestDTO;
+import com.company.business.dto.Business.summary.IndustrySummaryDTO;
+import com.company.business.dto.Business.summary.SectorSummaryDTO;
+
 import java.time.LocalDateTime;
 
 ///note: Only include what the client needs to display, read, or use.
 
 public record BusinessResponseDTO(
-    String title,
+     String title,
      String description,
 
-     SectorRequestDTO sector,
-     IndustryRequestDTO industry,
+     SectorSummaryDTO sector,
+     IndustrySummaryDTO industry,
 
      String email,
      String landlineNumber,
