@@ -86,7 +86,6 @@ public class AddressController {
         return ResponseEntity.ok(addressService.update(id, request));
     }
 
-
     @Operation(
         summary = "Delete an address",
         description = "Deletes the address matching the specified ID.",
@@ -102,7 +101,7 @@ public class AddressController {
         }
     )
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAddress(@PathVariable Long id)
+    public ResponseEntity<Void> deleteAddress(@PathVariable Long id) //ResponseEntity<Void> indicates that the HTTP response contains no response body.
     {
         addressService.deleteAddress(id);
         return ResponseEntity.noContent().build();

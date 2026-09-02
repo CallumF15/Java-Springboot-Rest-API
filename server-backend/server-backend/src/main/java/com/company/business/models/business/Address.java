@@ -13,8 +13,8 @@ import com.company.business.models.country.Country;
 
 @Entity
 @Table(name = "Address", schema = "public") // <-- make sure this matches your PostgreSQL table name
-@NoArgsConstructor //gens constructor no args
-@AllArgsConstructor //gens contructor with 1 arg for every field in class
+@NoArgsConstructor //generates constructor no args
+@AllArgsConstructor //generates constructor with 1 arg for every field in class
 @Getter
 @Setter
 public class Address {
@@ -23,24 +23,22 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Street is required")
-    @Size(max = 200)
+    @Column(nullable = false) //database column must not contain NULL
     private String street;
 
-    @NotBlank(message = "City is required")
-    @Size(max = 100)
+    @Column(nullable = false)
     private String city;
 
     @NotBlank(message = "State is required")
     @Size(max = 50)
     private String county;
 
-    @NotBlank(message = "Postcode is required")
-    @Size(max = 20)
+    @Column(nullable = false, length = 8)
     private String postcode;
 
     // One Country -> Many Addresses
     // Many Addresses -> One Country
     @ManyToOne
+    @JoinColumn(name = "country_id", nullable = false)
     private Country country;
 }

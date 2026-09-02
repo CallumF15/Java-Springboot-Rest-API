@@ -1,34 +1,21 @@
 package com.company.business.controllers.business;
 
-import com.company.business.Mappers.AddressMapper;
-import com.company.business.Mappers.AddressMapperImpl;
 import com.company.business.dto.Business.request.BusinessRequestDTO;
-import com.company.business.dto.Business.request.IndustryRequestDTO;
-import com.company.business.dto.Business.request.SectorRequestDTO;
 import com.company.business.dto.Business.response.BusinessResponseDTO;
-import com.company.business.models.business.Address;
-import com.company.business.repositories.business.AddressRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.company.business.Services.business.BusinessService;
 
-import com.company.business.models.Task;
 import com.company.business.models.business.Business;
 import com.company.business.models.business.Industry;
 import com.company.business.models.business.Sector;
-
-import com.company.business.repositories.business.BusinessRepository;
-import com.company.business.repositories.business.IndustryRepository;
-import com.company.business.repositories.business.SectorRepository;
-import com.company.business.repositories.business.AddressRepository;
 
 import java.util.List;
 

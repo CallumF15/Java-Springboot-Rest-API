@@ -9,27 +9,16 @@ import com.company.business.models.business.Industry;
 import com.company.business.models.business.Sector;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IndustryRepository extends JpaRepository<Industry, Long> {
 
     //Spring Data JPA automatically provides implementations for common database operations
     //If needed, add my own custom queries here.
 
-    public default SectorResponseDTO mapToResponseDTO(Sector sector)
-    {
-        List<IndustrySummaryDTO> industries = sector.getIndustries().stream()
-            .map(industry -> new IndustrySummaryDTO(
-                industry.getId(),
-                industry.getName()
-            ))
-            .toList();
-
-        return new SectorResponseDTO(
-            sector.getId(),
-            sector.getName(),
-            industries);
-    }
-
+    Optional<Industry> findByNameIgnoreCase(String name); //Why optional? This method might contain an Industry, or it might contain nothing.
     //filter by sector
     List<Industry> findBySectorId(Long sectorId); //spring auto gens SQL query
+
+    List<Industry> findByNameContainingIgnoreCase(String name);
 }

@@ -1,7 +1,9 @@
 package com.company.business.Mappers;
 
 import com.company.business.dto.Business.request.IndustryRequestDTO;
+import com.company.business.dto.Business.response.AddressResponseDTO;
 import com.company.business.dto.Business.response.IndustryResponseDTO;
+import com.company.business.models.business.Address;
 import com.company.business.models.business.Industry;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,7 +16,6 @@ public interface IndustryMapper extends BaseMapper<Industry, IndustryRequestDTO,
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "sector", ignore = true)
     Industry toEntity(IndustryRequestDTO dto);
-
 
     @Override
     @Mapping(source = "sector", target = "sector")
