@@ -17,7 +17,7 @@ A full-stack business management application built with Spring Boot and PostgreS
 ## Tech Stack
 
 **Backend:** Java, Spring Boot, Spring Data JPA, Hibernate Validator  
-**Frontend:** Nunjucks, Axios  (will change to something else)
+**Frontend:** To be added at a later date.
 **Database:** PostgreSQL  
 **Testing:** JUnit, RestAssured  
 **API Documentation:** OpenAPI / Swagger  
@@ -40,7 +40,9 @@ A full-stack business management application built with Spring Boot and PostgreS
 7. Build the project:
 8. ./gradlew build
 9. Run the application:
-	./gradlew bootRun
+	./gradlew bootRun 
+	OR
+	Build and run through any IDE 
 
 ### PostgreSQL Database
 
