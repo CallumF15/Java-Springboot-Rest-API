@@ -24,14 +24,12 @@ public class AddressService {
 
     private final AddressMapper addressMapper;
 
-    // Inject CountryService to resolve countryId → Country entity
     public AddressService(AddressRepository addressRepository, CountryRepository countryRepository, AddressMapper addressMapper) {
         this.addressRepository = addressRepository;
         this.countryRepository = countryRepository;
         this.addressMapper = addressMapper;
     }
-
-
+    
     /**
      * Creates a new address associated with the specified country.
      *
