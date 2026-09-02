@@ -26,8 +26,11 @@ import java.util.List;
 @Setter
 public class Sector {
 
+    // Using @GeneratedValue without a strategy defaults to AUTO, allowing Hibernate to choose
+    // the ID generation strategy based on the database and JPA provider.
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Uses the database's identity column to automatically generate a unique ID when a new record is inserted.
     private Long id;
 
     @Column(nullable = false, unique = true) //don't want duplicate sectors

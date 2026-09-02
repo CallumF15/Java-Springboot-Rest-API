@@ -123,7 +123,7 @@ public class AddressController {
                 description = "Validation failed")
         })
     @GetMapping("/All")
-    public ResponseEntity<List<AddressResponseDTO>> getAllCountries() {
+    public ResponseEntity<List<AddressResponseDTO>> getAllAddresses() {
         return ResponseEntity.ok(addressService.getAllAddresses());
     }
 

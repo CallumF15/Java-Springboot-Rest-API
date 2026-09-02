@@ -29,7 +29,7 @@ public class AddressService {
         this.countryRepository = countryRepository;
         this.addressMapper = addressMapper;
     }
-    
+
     /**
      * Creates a new address associated with the specified country.
      *
