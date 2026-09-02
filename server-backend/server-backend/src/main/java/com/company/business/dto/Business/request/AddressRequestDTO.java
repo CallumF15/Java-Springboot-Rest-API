@@ -1,6 +1,7 @@
 package com.company.business.dto.Business.request;
 
 import com.company.business.models.country.Country;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -25,6 +26,7 @@ public record AddressRequestDTO(
     @Size(max = 20)
     String postcode,
 
+    @Schema(example = "1") //tell swagger when showing request example, show ID 1
     @NotNull(message = "Country is required")
     Long countryId
 ){}

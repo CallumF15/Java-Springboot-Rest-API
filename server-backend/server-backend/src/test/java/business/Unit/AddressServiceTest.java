@@ -160,13 +160,13 @@ public class AddressServiceTest{
         when(addressRepository.save(any(Address.class))).thenReturn(saved); //DB saved the object and returned it
 
         // ACT
-        Address result = addressService.update(id, request);
+        AddressResponseDTO result = addressService.update(id, request);
 
         // THEN
-        assertEquals("New Street", result.getStreet(), "Street updated");
-        assertEquals("New City", result.getCity(),  "City updated");
-        assertEquals("New County", result.getCounty(),  "County updated");
-        assertEquals("99999", result.getPostcode(), "Postcode updated");
+        assertEquals("New Street", result.street(), "Street updated");
+        assertEquals("New City", result.city(),  "City updated");
+        assertEquals("New County", result.county(),  "County updated");
+        assertEquals("99999", result.postcode(), "Postcode updated");
 
         verify(addressRepository).findById(id);
         verify(addressRepository).save(existing);

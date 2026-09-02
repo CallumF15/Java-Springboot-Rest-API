@@ -17,7 +17,6 @@ public interface IndustryMapper extends BaseMapper<Industry, IndustryRequestDTO,
 
 
     @Override
-    @Mapping(source = "sector.id", target = "sectorId")
-    @Mapping(source = "sector.name", target = "sectorName")
+    @Mapping(source = "sector", target = "sector")
     IndustryResponseDTO toResponse(Industry industry);
 }

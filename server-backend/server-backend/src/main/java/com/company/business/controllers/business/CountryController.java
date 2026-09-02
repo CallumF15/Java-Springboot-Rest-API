@@ -22,7 +22,8 @@ public class CountryController {
 
     private final CountryService countryService;
 
-    public CountryController(CountryService countryService) {
+    public CountryController(CountryService countryService)
+    {
         this.countryService = countryService;
     }
 
@@ -37,7 +38,8 @@ public class CountryController {
         }
     )
     @GetMapping("/All")
-    public ResponseEntity<List<CountryResponseDTO>> getAllCountries() {
+    public ResponseEntity<List<CountryResponseDTO>> getAllCountries()
+    {
         return ResponseEntity.ok(countryService.getAllCountries());
     }
 
@@ -52,7 +54,10 @@ public class CountryController {
         }
     )
     @GetMapping("/Names")
-    public List<String> getAllCountryNames() { return countryService.getAllCountryNames(); }
+    public List<String> getAllCountryNames()
+    {
+        return countryService.getAllCountryNames();
+    }
 
     @Operation(
         summary = "Get all Countries Codes By String",
@@ -65,7 +70,10 @@ public class CountryController {
         }
     )
     @GetMapping("/Codes")
-    public List<String> getCountryCodes() { return countryService.getAllCountryCodes(); }
+    public ResponseEntity<List<String>> getCountryCodes()
+    {
+        return ResponseEntity.ok(countryService.getAllCountryCodes());
+    }
 
     @Operation(
         summary = "Get a Country by its ID",
@@ -84,5 +92,8 @@ public class CountryController {
         }
     )
     @GetMapping("/{id}")
-    public CountryResponseDTO getCountryById(@PathVariable Long id) { return countryService.getCountryById(id); }
+    public ResponseEntity<CountryResponseDTO> getCountryById(@PathVariable Long id)
+    {
+        return  ResponseEntity.ok(countryService.getCountryById(id));
+    }
 }

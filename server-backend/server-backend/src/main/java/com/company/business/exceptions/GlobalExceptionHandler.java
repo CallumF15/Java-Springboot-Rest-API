@@ -1,6 +1,5 @@
-package com.company.business.controllers;
+package com.company.business.exceptions;
 
-import com.company.business.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,7 +18,7 @@ public class GlobalExceptionHandler {
     // This method will handle all MethodArgumentNotValidException exceptions,
     // which are thrown when @Valid validation on a controller method argument fails
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ApiErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
 
         // ex.getBindingResult() gives access to the results of the failed validation
         // getAllErrors() returns a list of all validation errors (could be multiple fields)
@@ -32,12 +31,14 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
             .badRequest()
-            .body(errorMessage);
+            .body(new ApiErrorResponse(errorMessage));
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> handleNotFound(ResourceNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-            .body(ex.getMessage());
+    public ResponseEntity<ApiErrorResponse> handleNotFound(ResourceNotFoundException ex) {
+
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(new ApiErrorResponse(ex.getMessage()));
     }
 }

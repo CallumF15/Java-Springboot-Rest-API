@@ -1,5 +1,7 @@
 package com.company.business.repositories.business;
 
+import com.company.business.dto.Business.summary.IndustrySummaryDTO;
+import com.company.business.dto.Business.summary.SectorSummaryDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.company.business.dto.Business.response.IndustryResponseDTO;
 import com.company.business.dto.Business.response.SectorResponseDTO;
@@ -13,17 +15,19 @@ public interface IndustryRepository extends JpaRepository<Industry, Long> {
     //Spring Data JPA automatically provides implementations for common database operations
     //If needed, add my own custom queries here.
 
-    public default SectorResponseDTO mapToResponseDTO(Sector sector) {
-        List<IndustryResponseDTO> industries = sector.getIndustries().stream()
-            .map(industry -> new IndustryResponseDTO(
+    public default SectorResponseDTO mapToResponseDTO(Sector sector)
+    {
+        List<IndustrySummaryDTO> industries = sector.getIndustries().stream()
+            .map(industry -> new IndustrySummaryDTO(
                 industry.getId(),
-                industry.getName(),
-                sector.getId(),
-                sector.getName()
+                industry.getName()
             ))
             .toList();
 
-        return new SectorResponseDTO(sector.getId(), sector.getName(), industries);
+        return new SectorResponseDTO(
+            sector.getId(),
+            sector.getName(),
+            industries);
     }
 
     //filter by sector

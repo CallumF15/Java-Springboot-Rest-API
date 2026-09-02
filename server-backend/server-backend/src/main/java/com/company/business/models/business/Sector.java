@@ -30,7 +30,7 @@ public class Sector {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true) //don't want duplicate sectors
     private String name;
 
     @OneToMany(mappedBy = "sector") // "sector" refers to the field in Industry
