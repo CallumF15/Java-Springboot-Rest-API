@@ -6,7 +6,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-
 /**
  * Global exception handler for the application.
  * Catches exceptions thrown by controllers and formats a proper HTTP response.
@@ -34,11 +33,33 @@ public class GlobalExceptionHandler {
             .body(new ApiErrorResponse(errorMessage));
     }
 
+    /**
+    /* Handles cases where the selected industry does not belong to the selected sector.
+    /* Returns a 400 Bad Request response with a meaningful error message to the client.
+     */
+    @ExceptionHandler(InvalidIndustrySectorException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidIndustrySector(InvalidIndustrySectorException ex)
+    {
+        return ResponseEntity
+            .badRequest()
+            .body(new ApiErrorResponse(ex.getMessage()));
+    }
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiErrorResponse> handleNotFound(ResourceNotFoundException ex) {
 
         return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
             .body(new ApiErrorResponse(ex.getMessage()));
+    }
+
+    // Optional catch-all for unexpected errors
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiErrorResponse> handleException(
+        Exception ex) {
+
+        return ResponseEntity
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(new ApiErrorResponse("An unexpected error occurred"));
     }
 }

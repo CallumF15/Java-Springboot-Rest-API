@@ -39,10 +39,7 @@ public class Business {
     private String description;
 
     @ManyToOne
-    private Sector sector;
-
-    @ManyToOne
-    @JoinColumn(name = "industry_id")
+    @JoinColumn(name = "industry_id", nullable = false)
     private Industry industry;
 
     // ========================

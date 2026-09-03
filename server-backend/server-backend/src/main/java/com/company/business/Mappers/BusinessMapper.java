@@ -18,13 +18,15 @@ public interface BusinessMapper extends BaseMapper<Business, BusinessRequestDTO,
 {
     @Override
     @Mapping(target = "id", ignore = true)  //Mapping -> Do not try to map these properties from the DTO. Leave them alone and let something else handle their values.
-    @Mapping(target = "sector", ignore = true)
     @Mapping(target = "industry", ignore = true)
     @Mapping(target = "isActive", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     Business toEntity(BusinessRequestDTO dto); //MapStruct will generate code
 
-    //@Override
+    @Mapping(
+        target = "sector",
+        source = "industry.sector"
+    )
     BusinessResponseDTO toResponse(Business business);
 }

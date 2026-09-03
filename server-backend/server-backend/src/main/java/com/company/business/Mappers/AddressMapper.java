@@ -14,7 +14,10 @@ import org.mapstruct.Mapping;
 ///convert between your database model (Entity) and your API models (DTOs).
 
 
-@Mapper(componentModel = "spring") //Generate this mapper as a Spring bean so it can be injected with dependency injection.
+@Mapper( //Generate this mapper as a Spring bean so it can be injected with dependency injection.
+    componentModel = "spring",
+    uses = CountryMapper.class
+)
 public interface AddressMapper extends BaseMapper<Address, AddressRequestDTO, AddressResponseDTO>{
 
     @Override
@@ -27,7 +30,6 @@ public interface AddressMapper extends BaseMapper<Address, AddressRequestDTO, Ad
 //    AddressRequestDTO toRequest(Address address);
 
     @Override
-    @Mapping(source = "country.id", target = "countryId")
     AddressResponseDTO toResponse(Address address);
 
 
@@ -39,24 +41,3 @@ public interface AddressMapper extends BaseMapper<Address, AddressRequestDTO, Ad
     }
 }
 
-//@Mapper(componentModel = "spring") //Generate this mapper as a Spring bean so it can be injected with dependency injection.
-//public interface AddressMapper{
-//
-//    @Mapping(source = "country.id", target = "countryId")
-//    AddressRequestDTO toRequest(Address address);
-//
-//    @Mapping(source = "country.id", target = "countryId")
-//    AddressResponseDTO toResponse(Address address);
-//
-//
-//    @Mapping(source = "countryId", target = "country")
-//    @Mapping(target = "id", ignore = true)
-//    Address toEntity(AddressRequestDTO dto);
-//
-//    default Country map(Long countryId) {
-//        if (countryId == null) return null;
-//        Country c = new Country();
-//        c.setId(countryId);
-//        return c;
-//    }
-//}

@@ -21,24 +21,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/business") //will change this later
-public class BusinessController {
-
+public class BusinessController
+{
     private final BusinessService businessService;
-
 
     public BusinessController(BusinessService service)
     {
         this.businessService = service;
-    }
-
-    @GetMapping("/sectors")
-    public List<Sector> getAllSectors() {
-        return businessService.getAllSectors();
-    }
-
-    @GetMapping("industries/{sectorId}")
-    public List<Industry> getIndustriesBySector(@PathVariable Long sectorId) {
-        return businessService.getIndustriesBySectorId(sectorId);
     }
 
     @Operation(
@@ -59,10 +48,9 @@ public class BusinessController {
         return ResponseEntity.status(HttpStatus.CREATED).body(business);
     }
 
-    @GetMapping("all")
-    public List<Business> getAll() {
-        return businessService.getAllBusinesses();
+    @GetMapping("/all")
+    public ResponseEntity<List<BusinessResponseDTO>> getAllBusinesses()
+    {
+        return ResponseEntity.ok(businessService.getAllBusinesses());
     }
-
-
 }

@@ -8,5 +8,5 @@ public record AddressResponseDTO(
     String city,
     String county,
     String postcode,
-    Long countryId
+    CountryResponseDTO country
 ){}

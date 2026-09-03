@@ -19,10 +19,10 @@ public record BusinessRequestDTO(
     String description,
 
     @NotNull
-    Long sectorId,     // client sends only the ID
+    Long sectorId,
 
     @NotNull
-    Long industryId,   // client sends only the ID
+    Long industryId,   // client sends only the ID (can derive sector ID from this)
 
     // Contact Info
     @Email
