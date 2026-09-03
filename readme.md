@@ -1,23 +1,30 @@
 # Business Management Application
 
-Business Management Application
+A full-stack business management application built with Spring Boot and PostgreSQL, designed to provide a structured platform for creating, managing, and viewing business information through a RESTful API and web interface.
 
-A full-stack business management application built with Spring Boot and PostgreSQL. The application allows users to create, manage, and view business records through a REST API and web interface.
+The application allows businesses to be categorised by sector and industry, making it easier to organise and retrieve business records. Each business can store key information including contact details, address information, website details, business descriptions, and associated industry data.
 
-## Features
+The backend follows a layered architecture, separating controllers, services, repositories, entities, DTOs, and mappers to keep the application maintainable and scalable. MapStruct is used for mapping between entities and DTOs, while validation and global exception handling provide consistent and meaningful API responses.
 
+The REST API is documented using Springdoc OpenAPI / Swagger UI, allowing endpoints to be explored and tested during development.
+
+## Current Features
 - Create and manage business records
-- View all registered businesses
-- Server-side validation for required fields
-- Global exception handling with structured error responses
-- REST API built with Spring Boot
-- PostgreSQL database integration
-- Functional API testing with JUnit and RestAssured
+- Categorise businesses by sector and industry
+- Manage business address and country information
+- Retrieve individual businesses and business listings
+- DTO-based API request and response models
+- Input validation for business and contact information
+- Global exception handling with meaningful HTTP responses
+- Entity-to-DTO mapping using MapStruct
+- PostgreSQL database persistence
+- Interactive REST API documentation with Swagger UI
 
 ## Tech Stack
 
 **Backend:** Java, Spring Boot, Spring Data JPA, Hibernate Validator  
-**Frontend:** To be added at a later date.
+**Frontend:** To be added at a later date
+
 **Database:** PostgreSQL  
 **Testing:** JUnit, RestAssured  
 **API Documentation:** OpenAPI / Swagger  
@@ -53,15 +60,9 @@ A full-stack business management application built with Spring Boot and PostgreS
 
 Database tables will be generated automatically through JPA/Hibernate.
 
-### FrontEnd  (will change)
+### FrontEnd (Will be updated later when added)
 
-1. cd frontend 
-2. npm install
-3. npm start
 
-Routes included (additional routes coming)
-1) ‘list-tasks’  –  see a list of all tasks
-2)  ‘tasks’ – lets you create a new task
  
 ### Running Tests
 
@@ -78,7 +79,7 @@ API Documentation
 
 Example:
 
-http://localhost:8080/swagger-ui.html
+http://localhost:4000/swagger-ui/index.html
 
 ### Status
 
