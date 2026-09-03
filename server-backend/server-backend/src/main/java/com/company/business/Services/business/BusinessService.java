@@ -27,7 +27,6 @@ import com.company.business.models.country.Country;
 import com.company.business.repositories.business.BusinessRepository;
 import com.company.business.repositories.Location.CountryRepository;
 import com.company.business.repositories.business.IndustryRepository;
-import com.company.business.repositories.business.SectorRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -42,6 +41,7 @@ public class BusinessService {
 
     private final AddressMapper addressMapper;
     private final BusinessMapper businessMapper;
+    private final String businessName = "Business";
 
 
     @Autowired
@@ -64,12 +64,7 @@ public class BusinessService {
         Country country = countryRepository.findById(dto.address().countryId()).orElseThrow(() -> new RuntimeException("Country not found"));
 
         //Validate the Industry ID belongs to correct Sector ID
-        if (!industry.getSector().getId().equals(dto.sectorId())) {
-            throw new InvalidIndustrySectorException(
-                dto.industryId(),
-                dto.sectorId()
-            );
-        }
+        validateIndustryBelongsToSector(industry, dto.sectorId());
 
         //toEntity
         Business business = businessMapper.toEntity(dto);
@@ -86,6 +81,41 @@ public class BusinessService {
         return businessMapper.toResponse(saved);
     }
 
+    public BusinessResponseDTO update(Long id, BusinessRequestDTO request) {
+
+        Business existing = businessRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id, businessName));
+        Industry industry = industryRepository.findById(request.industryId()).orElseThrow(() -> new ResourceNotFoundException(request.industryId(), "Industry"));
+        Country country = countryRepository.findById(request.address().countryId()).orElseThrow(() -> new ResourceNotFoundException(request.address().countryId(), "Country"));
+
+        validateIndustryBelongsToSector(industry, request.sectorId());
+
+        businessMapper.updateEntityFromDto(request, existing);     // Update normal Business fields from the request
+        addressMapper.updateEntityFromDto(request.address(), existing.getAddress());   // Update the existing Address entity
+
+        // Update relationship
+        existing.setIndustry(industry);    // Update Industry relationship
+        existing.getAddress().setCountry(country); // Update Country relationship on the Address
+
+        Business saved = businessRepository.save(existing);
+
+        return businessMapper.toResponse(saved);
+    }
+
+    /**
+     * Deletes a Business with the specified ID.
+     *
+     * @param id the ID of the business to delete
+     * @throws ResourceNotFoundException if an business with the specified ID does not exist
+     */
+    public void deleteBusiness(Long id)
+    {
+        Business business = businessRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id, businessName));
+        businessRepository.delete(business);
+    }
+
+
+
+
     //fetch all business
     public List<BusinessResponseDTO> getAllBusinesses()
     {
@@ -99,5 +129,23 @@ public class BusinessService {
     public Business getBusinessById(Long id) {
         return businessRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Business not found with id " + id));
+    }
+
+
+    /**
+     * Validates that the selected industry belongs to the selected sector.
+     * Throws an InvalidIndustrySectorException if the industry is associated
+     * with a different sector.
+     */
+    private void validateIndustryBelongsToSector(
+        Industry industry,
+        Long sectorId) {
+
+        if (!industry.getSector().getId().equals(sectorId)) {
+            throw new InvalidIndustrySectorException(
+                industry.getId(),
+                sectorId
+            );
+        }
     }
 }

@@ -5,6 +5,7 @@ import com.company.business.dto.Business.response.BusinessResponseDTO;
 import com.company.business.models.business.Business;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(
     componentModel = "spring",
@@ -29,4 +30,13 @@ public interface BusinessMapper extends BaseMapper<Business, BusinessRequestDTO,
         source = "industry.sector"
     )
     BusinessResponseDTO toResponse(Business business);
+
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "industry", ignore = true)
+    @Mapping(target = "address", ignore = true)
+    @Mapping(target = "isActive", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    void updateEntityFromDto(BusinessRequestDTO dto, @MappingTarget Business business);
 }

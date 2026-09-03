@@ -9,6 +9,7 @@ import com.company.business.models.business.Business;
 import com.company.business.models.country.Country;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 ///MapStruct mapper contract
 ///convert between your database model (Entity) and your API models (DTOs).
@@ -31,6 +32,13 @@ public interface AddressMapper extends BaseMapper<Address, AddressRequestDTO, Ad
 
     @Override
     AddressResponseDTO toResponse(Address address);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "country", ignore = true)
+    void updateEntityFromDto(
+        AddressRequestDTO dto,
+        @MappingTarget Address address
+    );
 
 
     default Country map(Long countryId) {
