@@ -18,6 +18,7 @@ A full-stack business management application built with Spring Boot and PostgreS
 
 **Backend:** Java, Spring Boot, Spring Data JPA, Hibernate Validator  
 **Frontend:** To be added at a later date
+
 **Database:** PostgreSQL  
 **Testing:** JUnit, RestAssured  
 **API Documentation:** OpenAPI / Swagger  
