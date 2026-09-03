@@ -79,7 +79,7 @@ API Documentation
 
 Example:
 
-http://localhost:8080/swagger-ui.html
+http://localhost:4000/swagger-ui/index.html
 
 ### Status
 
