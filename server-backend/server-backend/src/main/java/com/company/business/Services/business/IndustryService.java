@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 @Service
 public class IndustryService
 {
-    public IndustryRepository industryRepository;
-    public SectorRepository sectorRepository;
-    public IndustryMapper industryMapper;
+    private final IndustryRepository industryRepository;
+    private final SectorRepository sectorRepository;
+    private final IndustryMapper industryMapper;
 
     private final String industryName = "Industry";
     private final String sectorName = "Sector";
@@ -91,6 +91,13 @@ public class IndustryService
         industryRepository.delete(industry);
     }
 
+    /**
+     * Retrieves an industry by its unique ID.
+     *
+     * @param id the ID of the industry to retrieve
+     * @return the industry matching the specified ID
+     * @throws ResourceNotFoundException if an industry with the specified ID does not exist
+     */
     public IndustryResponseDTO getIndustryById(Long id)
     {
         return industryRepository.findById(id)
@@ -98,6 +105,11 @@ public class IndustryService
             .orElseThrow(() -> new ResourceNotFoundException(id, industryName));
     }
 
+    /**
+     * Retrieves all industries.
+     *
+     * @return a list containing all industries
+     */
     public List<IndustryResponseDTO> getAllIndustries()
     {
         return industryRepository.findAll()

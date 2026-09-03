@@ -3,6 +3,7 @@ package com.company.business.controllers.business;
 import com.company.business.Services.business.IndustryService;
 import com.company.business.dto.Business.request.IndustryRequestDTO;
 import com.company.business.dto.Business.response.IndustryResponseDTO;
+import com.company.business.dto.Business.response.IndustryResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -106,6 +107,25 @@ public class IndustryController {
     }
 
     @Operation(
+        summary = "Get industry by ID",
+        description = "Returns a industry matching the provided ID",
+        responses = {
+            @ApiResponse(
+                responseCode = "200",
+                description = "Industry found"
+            ),
+            @ApiResponse(
+                responseCode = "404",
+                description = "Industry not found"
+            )
+        })
+    @GetMapping("/{id}")
+    public ResponseEntity<IndustryResponseDTO> getIndustryById(@PathVariable Long id)
+    {
+        return ResponseEntity.ok(industryService.getIndustryById(id));
+    }
+
+    @Operation(
         summary = "Get all industry in the industry table",
         description = "Returns a list of industries",
         responses = {
@@ -118,16 +138,16 @@ public class IndustryController {
                 responseCode = "400",
                 description = "Validation failed")
         })
-    @GetMapping("/sector/all")
+    @GetMapping("/all")
     public ResponseEntity<List<IndustryResponseDTO>> getAllIndustries() {
         return ResponseEntity.ok(industryService.getAllIndustries());
     }
 
-    @GetMapping("/sector/{sectorId}")
-    public ResponseEntity<List<IndustryResponseDTO>> getIndustriesBySector(@PathVariable Long sectorId)
+    @GetMapping("/{industryId}")
+    public ResponseEntity<List<IndustryResponseDTO>> getIndustriesBySector(@PathVariable Long industryId)
     {
         return ResponseEntity.ok(
-            industryService.getIndustriesBySector(sectorId)
+            industryService.getIndustriesBySector(industryId)
         );
     }
 

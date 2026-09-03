@@ -3,6 +3,7 @@ package com.company.business.Mappers;
 import com.company.business.dto.Business.request.BusinessRequestDTO;
 import com.company.business.dto.Business.request.SectorRequestDTO;
 import com.company.business.dto.Business.response.SectorResponseDTO;
+import com.company.business.dto.Business.summary.SectorSummaryDTO;
 import com.company.business.models.business.Business;
 import com.company.business.models.business.Sector;
 import org.mapstruct.Mapper;
@@ -23,4 +24,7 @@ public interface SectorMapper extends BaseMapper<Sector, SectorRequestDTO, Secto
 
     @Override
     SectorResponseDTO toResponse(Sector sector);
+
+
+    SectorSummaryDTO toResponseSummary(Sector sector);
 }
