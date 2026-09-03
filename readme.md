@@ -54,15 +54,9 @@ A full-stack business management application built with Spring Boot and PostgreS
 
 Database tables will be generated automatically through JPA/Hibernate.
 
-### FrontEnd  (will change)
+### FrontEnd (Will be updated later when added)
 
-1. cd frontend 
-2. npm install
-3. npm start
 
-Routes included (additional routes coming)
-1) ‘list-tasks’  –  see a list of all tasks
-2)  ‘tasks’ – lets you create a new task
  
 ### Running Tests
 
