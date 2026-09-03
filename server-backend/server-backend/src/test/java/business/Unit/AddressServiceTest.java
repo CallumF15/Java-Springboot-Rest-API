@@ -5,9 +5,11 @@ import com.company.business.Services.business.AddressService;
 import com.company.business.Services.business.CountryService;
 import com.company.business.dto.Business.request.AddressRequestDTO;
 import com.company.business.dto.Business.response.AddressResponseDTO;
+import com.company.business.dto.Business.response.CountryResponseDTO;
 import com.company.business.exceptions.ResourceNotFoundException;
 import com.company.business.models.business.Address;
 import com.company.business.models.country.Country;
+import com.company.business.repositories.Location.CountryRepository;
 import com.company.business.repositories.business.AddressRepository;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -20,8 +22,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 import java.util.Optional;
@@ -33,21 +34,39 @@ public class AddressServiceTest{
     private AddressRepository addressRepository;
 
     @Mock
+    private CountryRepository countryRepository;
+
+    @Mock
     private AddressMapper addressMapper;
 
     @InjectMocks
     private AddressService addressService;
 
-    AddressRequestDTO request;
+    private AddressRequestDTO request;
+    private AddressResponseDTO response;
 
     @BeforeEach
-    void Setup(){
+    void Setup()
+    {
         request = new AddressRequestDTO(
             "123 Main Street",
             "New York",
             "Somewhere",
             "12345",
             1L
+        );
+
+        response = new AddressResponseDTO(
+            1L,
+            "123 Main Street",
+            "New York",
+            "Somewhere",
+            "12345",
+            new CountryResponseDTO(
+                1L,
+                "United Kingdom",
+                "GB"
+            )
         );
     }
 
@@ -57,7 +76,8 @@ public class AddressServiceTest{
         //mock country
         Country country = new Country();
         country.setId(1L);
-        country.setName("UK");
+        country.setName("United Kingdom");
+        country.setCode("GB");
 
         Address mockAddress = new Address(
             1L,
@@ -70,74 +90,83 @@ public class AddressServiceTest{
 
         when(addressRepository.findById(1L)).thenReturn(Optional.of(mockAddress));
 
+        when(addressMapper.toResponse(mockAddress)).thenReturn(response);
+
         AddressResponseDTO result = addressService.getAddressById(1L);
 
         assertEquals("123 Main Street", result.street());
+        assertEquals("United Kingdom", result.country().name());
+
         verify(addressRepository).findById(1L);
+        verify(addressMapper).toResponse(mockAddress);
     }
     @Test
-    void shouldThrowExceptionWhenAddressNotFound() {
+    void shouldThrowExceptionWhenAddressNotFound()
+    {
         when(addressRepository.findById(99L)).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(ResourceNotFoundException.class, () -> addressService.getAddressById(99L));
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class,() -> addressService.getAddressById(99L));
 
         assertEquals("Address not found with id: 99", exception.getMessage());
+
+        verify(addressRepository).findById(99L);
+        verifyNoInteractions(addressMapper);
     }
 
     @Test
-    void shouldCreateAddress() {
-
+    void shouldCreateAddress()
+    {
         Country country = new Country();
         country.setId(1L);
-        country.setName("UK");
+        country.setName("United Kingdom");
+        country.setCode("GB");
 
         Address address = new Address();
         address.setStreet("123 Main Street");
+        address.setCity("New York");
+        address.setCounty("Somewhere");
+        address.setPostcode("12345");
+        address.setCountry(country);
 
-        AddressResponseDTO response = new AddressResponseDTO(
-            1L,
-            "123 Main Street",
-            "New York",
-            "Somewhere",
-            "12345",
-            1L
-        );
 
-        //when(countryService.getById(1L)).thenReturn(country);
-
+        when(countryRepository.findById(1L)).thenReturn(Optional.of(country));
         when(addressMapper.toEntity(request)).thenReturn(address);
-
-        when(addressRepository.save(any(Address.class)))
-            .thenAnswer(invocation -> invocation.getArgument(0));
-
+        when(addressRepository.save(any(Address.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(addressMapper.toResponse(any(Address.class))).thenReturn(response);
 
         AddressResponseDTO result = addressService.createAddress(request);
 
         assertEquals("123 Main Street", result.street());
+        assertEquals("United Kingdom", result.country().name());
 
         verify(addressMapper).toEntity(request);
-        verify(addressRepository).save(any(Address.class));
-        verify(addressMapper).toResponse(any(Address.class));
+        verify(addressRepository).save(address);
+        verify(addressMapper).toResponse(address);
+
+        //////////////////////////
+//        verify(addressMapper).toEntity(request);
+//        verify(addressRepository).save(any(Address.class));
+//        verify(addressMapper).toResponse(any(Address.class));
     }
 
     @Test
-    void shouldUpdateAddress() {
-
-        // GIVEN
+    void shouldUpdateAddress()
+    {
         Long id = 1L;
+
+        AddressRequestDTO updateRequest =
+            new AddressRequestDTO(
+                "New Street",
+                "New City",
+                "New County",
+                "99999",
+                1L
+            );
 
         Country country = new Country();
         country.setId(1L);
-        country.setName("UK");
-
-        AddressRequestDTO request = new AddressRequestDTO(
-            "New Street",
-            "New City",
-            "New County",
-            "99999",
-            1L
-        );
+        country.setName("United Kingdom");
+        country.setCode("GB");
 
         Address existing = new Address();
         existing.setId(id);
@@ -147,40 +176,37 @@ public class AddressServiceTest{
         existing.setPostcode("00000");
         existing.setCountry(country);
 
-        Address saved = new Address();
-        saved.setId(id);
-        saved.setStreet("New Street");
-        saved.setCity("New City");
-        saved.setCounty("New County");
-        saved.setPostcode("99999");
+        AddressResponseDTO response =
+            new AddressResponseDTO(
+                id,
+                "New Street",
+                "New City",
+                "New County",
+                "99999",
+                new CountryResponseDTO(
+                    1L,
+                    "United Kingdom",
+                    "GB"
+                )
+            );
 
-        // WHEN
-        when(addressRepository.findById(id)).thenReturn(Optional.of(existing)); //When the code calls findById(id), return this fake result instead of going to the database.
+        when(addressRepository.findById(id)).thenReturn(Optional.of(existing));
+        when(countryRepository.findById(1L)).thenReturn(Optional.of(country));
+        when(addressRepository.save(existing)).thenReturn(existing);
+        when(addressMapper.toResponse(existing)).thenReturn(response);
 
-        when(addressRepository.save(any(Address.class))).thenReturn(saved); //DB saved the object and returned it
+        AddressResponseDTO result = addressService.update(id, updateRequest);
 
-        // ACT
-        AddressResponseDTO result = addressService.update(id, request);
-
-        // THEN
-        assertEquals("New Street", result.street(), "Street updated");
-        assertEquals("New City", result.city(),  "City updated");
-        assertEquals("New County", result.county(),  "County updated");
-        assertEquals("99999", result.postcode(), "Postcode updated");
+        assertEquals("New Street", result.street());
+        assertEquals("New City", result.city());
+        assertEquals("New County", result.county());
+        assertEquals("99999", result.postcode());
+        assertEquals("United Kingdom", result.country().name());
+        assertEquals("GB", result.country().code());
 
         verify(addressRepository).findById(id);
+        verify(countryRepository).findById(1L);
         verify(addressRepository).save(existing);
+        verify(addressMapper).toResponse(existing);
     }
-
-    @Test
-    void testCreate() {
-        assertNotNull(request);
-    }
-    @Test
-    void testUpdate() {
-        assertEquals("123 Main Street", request.street());
-        assertEquals("New York", request.city());
-        assertEquals("Somewhere", request.county());
-    }
-
 }
